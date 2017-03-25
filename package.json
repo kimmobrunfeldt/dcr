@@ -1,0 +1,40 @@
+{
+  "name": "drc",
+  "version": "0.1.0",
+  "description": "Decrypt sensitive parts of log stream on the fly",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimmobrunfeldt/dcr.git"
+  },
+  "keywords": [
+    "decrypt",
+    "encrypt",
+    "log",
+    "cli"
+  ],
+  "author": "Kimmo Brunfeldt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kimmobrunfeldt/dcr/issues"
+  },
+  "homepage": "https://github.com/kimmobrunfeldt/dcr#readme",
+  "dependencies": {
+    "byline": "^5.0.0",
+    "lodash": "^4.17.4",
+    "simple-encryptor": "^1.1.0",
+    "yargs": "^7.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb-base": "^7.2.0",
+    "eslint-plugin-import": "^1.16.0",
+    "mocha": "^3.2.0",
+    "np": "^2.13.1"
+  },
+  "scripts": {
+    "test": "mocha --harmony",
+    "lint": "eslint ./src ./test",
+    "example": "node examples/log-sensitive.js | node ."
+  }
+}
