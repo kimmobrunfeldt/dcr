@@ -10,7 +10,7 @@ Turn this log stream with encrypted details
 2017-03-25T22:40:38.590Z - warn: [error-logger.js] Request body: ENCRYPTED(09fdb69ec06f0357e97225178e7403041b32da1520ce5b3eea1188f2a92c5947a29f5206)
 ```
 
-to this, on the fly:
+to readable on the fly:
 
 ```
 2017-03-25T22:40:38.590Z - warn: [error-logger.js] Request body: {"name": "John Doe"}
@@ -44,7 +44,7 @@ npm start | dcr
 Or with a Heroku app:
 
 ```bash
-heroku logs -a my-app -t | dcr --key $(heroku config:get LOG_ENCRYPT_KEY -a my-app)
+heroku logs -a my-app -t | dcr --key=$(heroku config:get LOG_ENCRYPT_KEY -a my-app)
 ```
 
 Decryption key is read from `process.env.LOG_ENCRYPT_KEY` by default.
