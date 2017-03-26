@@ -2,6 +2,8 @@
 
 > Decrypt sensitive parts of log stream on the fly
 
+[![Build Status](https://travis-ci.org/kimmobrunfeldt/dcr.svg?branch=master)](https://travis-ci.org/kimmobrunfeldt/dcr) *Build status for master*
+
 [![NPM Badge](https://nodei.co/npm/dcr.png?downloads=true)](https://www.npmjs.com/package/dcr)
 
 Decrypts a log stream with some encrypted details
