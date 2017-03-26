@@ -1,6 +1,6 @@
 {
   "name": "dcr",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Decrypt sensitive parts of log stream on the fly",
   "main": "src/index.js",
   "bin": {
