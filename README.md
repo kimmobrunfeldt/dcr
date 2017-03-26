@@ -18,9 +18,12 @@ to readable on the fly:
 
 ## Why
 
-Convenient when you need to log sensitive user data. My personal use case
-is to log body objects of failed requests. They might contain user
-information so I encrypt the data, but otherwise I want to keep logs readable.
+This tool makes life easier when logging sensitive data as encrypted.
+
+I use this in my node backend project. The main use case is to log body
+objects of failed requests. They might contain user information so
+encrypting the data is good practice. I want to keep other parts of the logs
+as plain text so they are searchable in e.g. Papertrail.
 
 ## Usage
 
