@@ -41,16 +41,22 @@ const userData = { name: 'John Doe', securityNumber: '1234' };
 console.log('User data', `ENCRYPTED(${encryptor.encrypt(secretObj)})`);
 ```
 
-To print logs as plain text, just run:
+**To print logs as plain text**
 
 ```
 npm start | dcr
 ```
 
-Or with a Heroku app:
+**Print Heroku logs as plain text**
 
 ```bash
 heroku logs --force-colors -a my-app -t | dcr --key=$(heroku config:get LOG_ENCRYPT_KEY -a my-app)
+```
+
+**Decrypt also stderr**
+
+```bash
+npm start 2>&1 | dcr
 ```
 
 Decryption key is read from `process.env.LOG_ENCRYPT_KEY` by default.

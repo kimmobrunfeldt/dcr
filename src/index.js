@@ -1,20 +1,18 @@
 #!/usr/bin/env node
 
 const _ = require('lodash');
-const replaceStream = require('replacestream');
+const transformStream = require('./tag-transform-stream');
 const cliParser = require('./cli-parser');
 const simpleEncryptor = require('simple-encryptor');
 
-const RE_ENCRYPT = /ENCRYPTED\((.+)\)/g;
-
-function replaceEncryptedBlock(encryptor, wholeMatch, encrypted) {
+function replaceEncryptedBlock(encryptor, encrypted) {
   const decrypted = encryptor.decrypt(encrypted);
   const plainText = _.isPlainObject(decrypted)
     ? JSON.stringify(decrypted)
     : decrypted;
 
   if (plainText === null) {
-    return '(INVALID DECRYPTION KEY)';
+    return '(INVALID ENCRYPTED DATA OR DECRYPTION KEY)';
   }
 
   return plainText;
@@ -26,12 +24,21 @@ function main(opts) {
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin
-    .pipe(replaceStream(
-      RE_ENCRYPT,
-      replaceEncryptedBlock.bind(this, encryptor),
-      { maxMatchLen: 1024 }
-    ))
+    .pipe(transformStream({
+      startTag: 'ENCRYPTED(',
+      endTag: ')',
+      transform: replaceEncryptedBlock.bind(this, encryptor),
+      maxCharsBetweenTags: opts.maxChars,
+    }))
     .pipe(process.stdout);
+
+  process.stdout.on('error', (err) => {
+    if (err.code === 'EPIPE') {
+      process.exit(0);
+    }
+
+    throw err;
+  });
 }
 
 

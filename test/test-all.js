@@ -1,6 +1,5 @@
 // Test basic usage of cli
 
-const _ = require('lodash');
 const path = require('path');
 const assert = require('assert');
 const VERSION = require('../package.json').version;
@@ -34,16 +33,51 @@ describe('dcr', () => {
       })
   );
 
-  it('log-sensitive-large-data.js case', () =>
-    execShell('node test/cases/log-sensitive-large-data.js | node .')
+  it('limit the amount of chars allowed in encrypted block', () =>
+    execShell('node test/cases/10-chars-inside-block.js | node . --max-chars=9')
       .then((stdout) => {
-        const largeSecret = _.reduce(_.range(10000), (memo, i) => {
-          // eslint-disable-next-line
-          memo[`userData${i}`] = 'secret-data';
-          return memo;
-        }, {});
+        assert.strictEqual(stdout, 'Testing ENCRYPTED(0123456789)\n');
+      })
+  );
 
-        assert.strictEqual(stdout, `Testing ${JSON.stringify(largeSecret)}\n`);
+  it('multiple-start-tags.js case', () =>
+    execShell('node test/cases/multiple-start-tags.js | node .')
+      .then((stdout) => {
+        // A second start tag between tags are ignored. The data is tried
+        // to decrypt but it is of course invalid
+        assert.strictEqual(stdout, 'Testing (INVALID ENCRYPTED DATA OR DECRYPTION KEY)\n');
+      })
+  );
+
+  it('empty-data.js case', () =>
+    execShell('node test/cases/empty-data.js | node .')
+      .then((stdout) => {
+        assert.strictEqual(stdout, 'Testing (INVALID ENCRYPTED DATA OR DECRYPTION KEY)\n');
+      })
+  );
+
+  it('partial-start-tag.js case', () =>
+    execShell('node test/cases/partial-start-tag.js | node .')
+      .then((stdout) => {
+        // Should be just printed as is, no transformations should be applied
+        assert.strictEqual(stdout, 'Testing ENCRYP )\n');
+      })
+  );
+
+  it('no-end-tag.js case', () =>
+    execShell('node test/cases/no-end-tag.js | node .')
+      .then((stdout) => {
+        // Should be just printed as is, no transformations should be applied
+        assert.strictEqual(stdout, 'Testing ENCRYPTED(....................\n');
+      })
+  );
+
+  it('multiple-start-tags.js case', () =>
+    execShell('node test/cases/multiple-start-tags.js | node .')
+      .then((stdout) => {
+        // A second start tag between tags are ignored. The data is tried
+        // to decrypt but it is of course invalid
+        assert.strictEqual(stdout, 'Testing (INVALID ENCRYPTED DATA OR DECRYPTION KEY)\n');
       })
   );
 });

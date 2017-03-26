@@ -4,6 +4,7 @@ const VERSION = require('../package.json').version;
 
 const defaultOpts = {
   key: process.env.LOG_ENCRYPT_KEY,
+  maxChars: 1024 * 1024,
 };
 
 function getUserOpts() {
@@ -14,6 +15,12 @@ function getUserOpts() {
       describe: 'Decryption key. Default taken from process.env.LOG_ENCRYPT_KEY.',
       default: process.env.LOG_ENCRYPT_KEY,
       type: 'string',
+    })
+    .option('max-chars', {
+      describe: 'Maximum characters allowed inside encrypted block. If the limit' +
+       ' is exceeded, block is printed as is and no transformation is applied.',
+      default: defaultOpts.maxChars,
+      type: 'number',
     })
     .help('h')
     .alias('h', 'help')
@@ -26,6 +33,12 @@ function getUserOpts() {
 
 function validateAndTransformOpts(opts) {
   // No-op for now
+  if (opts.maxChars < 1) {
+    const err = new Error('--max-chars has to be over zero');
+    err.argumentError = true;
+    throw err;
+  }
+
   return opts;
 }
 
