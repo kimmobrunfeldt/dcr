@@ -37,10 +37,11 @@ In server code, encrypt certain parts of logs with [simple-encryptor](https://gi
 
 ```js
 const simpleEncryptor = require('simple-encryptor');
-
 const encryptor = simpleEncryptor(process.env.LOG_ENCRYPT_KEY);
+
 const userData = { name: 'John Doe', securityNumber: '1234' };
-console.log('User data', `ENCRYPTED(${encryptor.encrypt(secretObj)})`);
+const encrypted = encryptor.encrypt(userData);
+console.log('User data', `ENCRYPTED(${encrypted})`);
 ```
 
 **To print logs as plain text**
