@@ -1,16 +1,10 @@
 const _ = require('lodash');
 const yargs = require('yargs');
-
 const VERSION = require('../package.json').version;
+
 const defaultOpts = {
   key: process.env.LOG_ENCRYPT_KEY,
 };
-
-function getOpts() {
-  const userOpts = getUserOpts();
-  const opts = _.merge(defaultOpts, userOpts);
-  return validateAndTransformOpts(opts);
-}
 
 function getUserOpts() {
   const userOpts = yargs
@@ -33,6 +27,12 @@ function getUserOpts() {
 function validateAndTransformOpts(opts) {
   // No-op for now
   return opts;
+}
+
+function getOpts() {
+  const userOpts = getUserOpts();
+  const opts = _.merge(defaultOpts, userOpts);
+  return validateAndTransformOpts(opts);
 }
 
 module.exports = {

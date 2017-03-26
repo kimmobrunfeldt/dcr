@@ -24,8 +24,10 @@ function main(opts) {
         : decrypted;
 
       if (plainText !== null) {
+        // eslint-disable-next-line
         line = line.replace(match[0], plainText);
       } else {
+        // eslint-disable-next-line
         line = line.replace(match[0], '(INVALID DECRYPTION KEY)');
       }
 
