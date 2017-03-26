@@ -9,13 +9,13 @@
 Decrypts a log stream with some encrypted details
 
 ```
-2017-03-25T22:40:38.590Z [error-logger.js] Request body: **ENCRYPTED(09fdb69ec06f0357e972251ea1188f2a92c5929f5206)**
+2017-03-25T22:40:38.590Z Request body: ENCRYPTED(09fdb69ec06f0357e972251ea1188f2a92c5929f5206)
 ```
 
 to readable on the fly:
 
 ```
-2017-03-25T22:40:38.590Z [error-logger.js] Request body: **{"name": "John Doe"}**
+2017-03-25T22:40:38.590Z Request body: {"name": "John Doe"}
 ```
 
 ## Why
