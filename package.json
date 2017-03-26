@@ -3,6 +3,9 @@
   "version": "0.1.2",
   "description": "Decrypt sensitive parts of log stream on the fly",
   "main": "src/index.js",
+  "bin": {
+    "dcr": "src/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kimmobrunfeldt/dcr.git"
