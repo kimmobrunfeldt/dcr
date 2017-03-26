@@ -27,18 +27,18 @@ as plain text so they are searchable in e.g. Papertrail.
 
 ## Usage
 
-In server code, encrypt certain parts of logs with [simple-encryptor](https://github.com/sehrope/node-simple-encryptor).
+In server code, encrypt certain parts of logs with [simple-encryptor](https://github.com/sehrope/node-simple-encryptor). Make sure you log in
+`ENCRYPTED(gibberish)` format.
 
 ```js
 const simpleEncryptor = require('simple-encryptor');
 
 const encryptor = simpleEncryptor(process.env.LOG_ENCRYPT_KEY);
-function logEncrypted(level, plainText, secretObj) {
-  winston[level](plainText, `ENCRYPTED(${encryptor.encrypt(secretObj)})`);
-};
+const userData = { name: 'John Doe', securityNumber: '1234' };
+console.log('User data', `ENCRYPTED(${encryptor.encrypt(secretObj)})`);
 ```
 
-To print logs as plain text, I just need to run:
+To print logs as plain text, just run:
 
 ```
 npm start | dcr
