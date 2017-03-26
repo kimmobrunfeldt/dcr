@@ -76,6 +76,33 @@ npm install -g dcr
 Only Node 6 is "officially" supported at the moment.
 
 
+## Help
+
+```
+Usage: dcr [options]
+
+Options:
+  --key          Decryption key. Default taken from process.env.LOG_ENCRYPT_KEY.
+                                          [string] [default: "0123456789abcdef"]
+  --max-chars    Maximum characters allowed inside encrypted block. If the limit
+                 is exceeded, block is printed as is and no transformation is
+                 applied.                            [number] [default: 1048576]
+  -h, --help     Show help                                             [boolean]
+  -v, --version  Show version number                                   [boolean]
+
+Examples:
+
+  Decrypt stdout from npm start command
+  $ npm start | dcr
+
+  Decrypt stdout+err from npm start command
+  $ npm start 2>&1 | dcr
+
+  Decrypt logs from Heroku app
+  $ heroku logs --force-colors -a my-app -t | dcr --key=$(heroku config:get
+  LOG_ENCRYPT_KEY -a my-app
+```
+
 ## License
 
 MIT

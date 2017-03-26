@@ -10,7 +10,11 @@ const defaultOpts = {
 function getUserOpts() {
   const userOpts = yargs
     .usage('Usage: $0 [options]\n\n')
-    .example('npm start | $0')
+    .example('\nDecrypt stdout from npm start command\n $ npm start | dcr')
+    .example('\nDecrypt stdout+err from npm start command\n $ npm start 2>&1 | dcr')
+    .example('\nDecrypt logs from Heroku app\n$ heroku logs --force-colors -a' +
+      ' my-app -t | dcr --key=$(heroku config:get LOG_ENCRYPT_KEY -a my-app'
+    )
     .option('key', {
       describe: 'Decryption key. Default taken from process.env.LOG_ENCRYPT_KEY.',
       default: process.env.LOG_ENCRYPT_KEY,
