@@ -1,5 +1,5 @@
 {
-  "name": "drc",
+  "name": "dcr",
   "version": "0.1.1",
   "description": "Decrypt sensitive parts of log stream on the fly",
   "main": "src/index.js",
