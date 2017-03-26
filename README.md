@@ -55,6 +55,9 @@ heroku logs --force-colors -a my-app -t | dcr --key=$(heroku config:get LOG_ENCR
 
 Decryption key is read from `process.env.LOG_ENCRYPT_KEY` by default.
 
+**Unfortunately the only way to use `dcr` currently is via piping.** Open
+an issue if you have other use cases.
+
 ## Install
 
 ```bash

@@ -1,43 +1,39 @@
 #!/usr/bin/env node
 
 const _ = require('lodash');
-const byline = require('byline');
+const replaceStream = require('replacestream');
 const cliParser = require('./cli-parser');
 const simpleEncryptor = require('simple-encryptor');
 
 const RE_ENCRYPT = /ENCRYPTED\((.+)\)/g;
+
+function replaceEncryptedBlock(encryptor, wholeMatch, encrypted) {
+  const decrypted = encryptor.decrypt(encrypted);
+  const plainText = _.isPlainObject(decrypted)
+    ? JSON.stringify(decrypted)
+    : decrypted;
+
+  if (plainText === null) {
+    return '(INVALID DECRYPTION KEY)';
+  }
+
+  return plainText;
+}
 
 function main(opts) {
   const encryptor = simpleEncryptor(opts.key);
 
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
-
-  const stdinLineStream = byline(process.stdin, { keepEmptyLines: true });
-  stdinLineStream.on('data', (line) => {
-    let match = RE_ENCRYPT.exec(line);
-    while (match !== null) {
-      const encrypted = match[1];
-      const decrypted = encryptor.decrypt(encrypted);
-      const plainText = _.isPlainObject(decrypted)
-        ? JSON.stringify(decrypted)
-        : decrypted;
-
-      if (plainText !== null) {
-        // eslint-disable-next-line
-        line = line.replace(match[0], plainText);
-      } else {
-        // eslint-disable-next-line
-        line = line.replace(match[0], '(INVALID DECRYPTION KEY)');
-      }
-
-      match = RE_ENCRYPT.exec(line);
-    }
-
-    process.stdout.write(line);
-    process.stdout.write('\n');
-  });
+  process.stdin
+    .pipe(replaceStream(
+      RE_ENCRYPT,
+      replaceEncryptedBlock.bind(this, encryptor),
+      { maxMatchLen: 1024 }
+    ))
+    .pipe(process.stdout);
 }
+
 
 if (require.main === module) {
   let opts;

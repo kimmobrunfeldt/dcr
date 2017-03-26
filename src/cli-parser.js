@@ -11,8 +11,8 @@ function getUserOpts() {
     .usage('Usage: $0 [options]\n\n')
     .example('npm start | $0')
     .option('key', {
-      describe: 'Decryption key',
-      default: defaultOpts.key,
+      describe: 'Decryption key. Default taken from process.env.LOG_ENCRYPT_KEY.',
+      default: process.env.LOG_ENCRYPT_KEY,
       type: 'string',
     })
     .help('h')

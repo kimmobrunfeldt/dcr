@@ -25,7 +25,10 @@
   "dependencies": {
     "byline": "^5.0.0",
     "lodash": "^4.17.4",
+    "replacestream": "^4.0.2",
     "simple-encryptor": "^1.1.0",
+    "spawn-default-shell": "^2.0.0",
+    "stream-to-promise": "^2.2.0",
     "yargs": "^7.0.2"
   },
   "devDependencies": {
@@ -36,7 +39,7 @@
     "np": "^2.13.1"
   },
   "scripts": {
-    "test": "npm run lint",
+    "test": "mocha && npm run lint",
     "lint": "eslint ./src ./test",
     "example": "node examples/log-sensitive.js | node ."
   }
