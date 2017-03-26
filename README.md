@@ -50,7 +50,7 @@ npm start | dcr
 Or with a Heroku app:
 
 ```bash
-heroku logs -a my-app -t | dcr --key=$(heroku config:get LOG_ENCRYPT_KEY -a my-app)
+heroku logs --force-colors -a my-app -t | dcr --key=$(heroku config:get LOG_ENCRYPT_KEY -a my-app)
 ```
 
 Decryption key is read from `process.env.LOG_ENCRYPT_KEY` by default.
